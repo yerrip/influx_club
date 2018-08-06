@@ -1,0 +1,18 @@
+<h1> Listing</h1>
+
+<h3>Comments</h3>
+
+<ul>
+  <% @listings.each do |listing| %>
+
+    <li><%= listings.title %></li>
+
+  <% end %>
+</ul>
+
+
+
+<%= simple_form_for [@listings, Listing.new] do |l| %>
+  <%= l.input :body %>
+  <%= l.button :submit, "Add Listing" %>
+  <% end %>
