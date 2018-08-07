@@ -1,4 +1,4 @@
-<%= simple_form_for @listing do |l| %>
+<%= simple_form_for [@category, @listing] do |l| %>
 
   <%= l.input :title %>
   <%= l.input :body %>
