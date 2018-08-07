@@ -1,18 +1,13 @@
-<h1> Listing</h1>
+<h1><%= @category.title %></h1>
 
-<h3>Comments</h3>
+<% @category.listings.each do |listing| %>
 
-<ul>
-  <% @listings.each do |listing| %>
+  <h2><%= link_to listing.title, category_listing_path(@category, listing) %></h2>
 
-    <li><%= listings.title %></li>
+  <%= simple_format listing.body %>
 
-  <% end %>
-</ul>
+<% end %>
 
-
-
-<%= simple_form_for [@listings, Listing.new] do |l| %>
-  <%= l.input :body %>
-  <%= l.button :submit, "Add Listing" %>
-  <% end %>
+<p>
+  <%= link_to "Add new listing", new_category_listing_path(@category) %>
+</p>

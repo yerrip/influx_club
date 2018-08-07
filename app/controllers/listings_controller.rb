@@ -1,39 +1,35 @@
 class ListingsController < ApplicationController
-
-
-  def index
-    @listings = Listing.find(params[:categories_id])
-
+  def show
+    # get the category from the category_id, this is due to the config/routes.rb
+    # as we have:
+    # resources :categories do
+    #   resources :listings
+    # end
+    @category = Category.find(params[:category_id])
+    @listing = Listing.find(params[:id])
   end
 
   def new
-    #form for adding a new review
-    @listing = Listing.new
+    @category = Category.find(params[:category_id])
+
+    @listing = @category.listings.new
   end
 
   def create
+    @category = Category.find(params[:category_id])
 
-    @category = Category.find(params[:categories_id])
+    # make a new listing on this category
+    @listing = @category.listings.new(form_params)
 
-
-    @listings = @category.listings.new
-
-    @listing.save
-
-    #go back to the review show page
-    redirect_to category_path(@category)
-
+    if @listing.save
+      redirect_to category_path(@category)
+    else
+      render "new"
+    end
   end
-
-  def show
-    #individual review page
-    @listings = Listing.all
-  end
-
 
   def form_params
-    params.require(:listing).permit(:category, :title, :body)
+    # get the data from the form
+    params.require(:listing).permit(:title, :description)
   end
-
-
 end
